@@ -2,7 +2,7 @@ package response
 
 import "net/http"
 
-type Http struct {
+type Common struct {
 	Status      int    `json:"status"`
 	ErrorSchema string `json:"error_schema"`
 	Payload     any    `json:"payload"`
@@ -19,8 +19,8 @@ func (e *RequestValidationError) Error() string {
 	return e.Message
 }
 
-func SuccessResponse(data any) Http {
-	return Http{
+func SuccessResponse(data any) Common {
+	return Common{
 		Status:      http.StatusOK,
 		ErrorSchema: "Success",
 		Payload:     data,
@@ -28,8 +28,8 @@ func SuccessResponse(data any) Http {
 	}
 }
 
-func ErrorResponse() Http {
-	return Http{
+func ErrorResponse() Common {
+	return Common{
 		Status:      http.StatusInternalServerError,
 		ErrorSchema: "Internal Server Error",
 		Payload:     nil,
@@ -37,8 +37,8 @@ func ErrorResponse() Http {
 	}
 }
 
-func FailedResponse(msg string, status int, validation *[]map[string]string) Http {
-	return Http{
+func FailedResponse(msg string, status int, validation *[]map[string]string) Common {
+	return Common{
 		Status:      status,
 		ErrorSchema: msg,
 		Payload:     nil,
